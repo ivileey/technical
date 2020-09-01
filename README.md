@@ -14,9 +14,10 @@
 
 ## Java学习文档
 
-- javaguid在线阅读地址：https://snailclimb.gitee.io/javaguide-interview/#/
-
-- javaguidGithub：https://github.com/Snailclimb/JavaGuide-Interview
+- [javaguidGithub](https://github.com/Snailclimb/JavaGuide-Interview)
+- [美团技术团队](https://tech.meituan.com/)
+- [JCSprout](https://crossoverjie.top/JCSprout/#/)
+- [CyC2018/CS-Notes](https://github.com/CyC2018/CS-Notes)
 
 
 
