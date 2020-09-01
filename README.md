@@ -4,14 +4,19 @@
 ## 作者介绍
 来自浙江理工大学在读研究生。写代码多年。热爱街舞，健身运动。
 
+[个人博客地址](http://www.yner.top/)
+
+[csdn](https://blog.csdn.net/nishuiaee)
+
+[github](https://github.com/ivileey)
 
 
 
+## Java学习文档
 
-## 大佬的Java学习文档
+- javaguid在线阅读地址：https://snailclimb.gitee.io/javaguide-interview/#/
 
-- 在线阅读地址：https://snailclimb.gitee.io/javaguide-interview/#/
-- Github：https://github.com/Snailclimb/JavaGuide-Interview
+- javaguidGithub：https://github.com/Snailclimb/JavaGuide-Interview
 
 
 
