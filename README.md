@@ -1,5 +1,7 @@
 # Yuner的技术文档
 
+[浏览地址：http://www.yner.top/technical/](http://www.yner.top/technical/)
+
 
 ## 作者介绍
 来自浙江理工大学在读研究生。写代码多年。热爱街舞，健身运动。
