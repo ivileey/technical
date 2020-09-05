@@ -14,16 +14,19 @@
   * [操作系统](./docs/c-4操作系统.md)  
 * Redis
 
-  - [redis](./docs/d-1redis.md)
+  - [redis](./docs/d-1redis.md) 
+  - [IO多路复用](./docs/d-2IO多路复用.md)
 * 数据库
 
-  - [数据库](./docs/e-1数据库.md)
+  - [Mysql数据库](./docs/e-1数据库.md)
 * Spring
 
   - [spring](./docs/f-1spring.md)
 * 分布式与微服务
 
   - [分布式与微服务](g-1分布式与微服务)
+* netty
+  - [netty](./docs/netty.md)
 * 读过的技术类书籍
 
   - [读过的书](./docs/h-1books.md)
