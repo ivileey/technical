@@ -26,6 +26,7 @@
 - [美团技术团队](https://tech.meituan.com/)
 - [JCSprout](https://crossoverjie.top/JCSprout/#/)
 - [CyC2018/CS-Notes](https://github.com/CyC2018/CS-Notes)
+- [mall项目](https://github.com/macrozheng/mall)
 
 ## 我读过的技术类书籍
 
