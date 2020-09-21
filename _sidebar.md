@@ -6,6 +6,7 @@
   * [Java集合](./docs/b-2Java集合.md)
   * [Java多线程](./docs/b-3Java多线程.md)
   * [jvm](./docs/b-4jvm.md)
+  * [jvm常见问题](./docs/b-2jvm常见问题)
 * 计算机基础
 
   * [计算机网络](./docs/c-1计算机网络.md)
@@ -25,6 +26,7 @@
 * 分布式与微服务
 
   - [分布式与微服务](g-1分布式与微服务)
+  - [Zookeeper](./docs/g-2zookeeper.md)
 * netty
   - [netty](./docs/netty.md)
 * 读过的技术类书籍

@@ -107,6 +107,22 @@
 
 ​	AIO 也就是 NIO 2。在 Java 7 中引入了 NIO 的改进版 NIO 2,它是异步非阻塞的IO模型。异步 IO 是基于事件和回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作。
 
+
+
+- 同步和异步仅仅是关注的消息如何通知的机制，而阻塞与非阻塞关注的是等待消息通知时的状态。也就是说，同步的情况下，是由处理消息者自己去等待消息是否被触发，而异步的情况下是由触发机制来通知处理消息者，所以在异步机制中，处理消息者和触发机制之间就需要一个连接的桥梁：
+
+ - redis和nginx用的是epoll，javanio在linux下也是用的epoll
+## BIO有什么缺陷？
+- BIO中的“B”表示的是阻塞,作为服务器开发的话，我们使用ServerSocket绑定完端口号之后,我们会进行监听该端口,等待accept时间,accept会阻塞当前主线程
+## 针对C10K这样的需求,NIO靠什么解决的问题？
+## 多路复用操作系统函数 select(...)工作原理
+## 多路复用操作系统函数select(...)默认监听socket数量为什么是1024
+## 多路复用操作系统函数select(...)第一遍O(N)未发现就绪socket, 后续在某个socket就绪后,select(...)如何感知的？是不停的轮询吗？
+## 多路复用操作系统函数poll(..)和select(..)主要区别是什么?
+## 为什么会有epoll这个技术, 它的产生的背景是什么呢?
+## epoll函数的工作原理是什么呢?
+## eventpoll对象的就绪列表数据是如何维护的呢?
+## eventpoll对象中存放需要检查的socket信息是采用什么数据结构？为什么？
 ## 参考链接
 
 1. [JAVANIO](https://tech.meituan.com/2016/11/04/nio.html)
@@ -114,4 +130,7 @@
 3. [BIO,NIO,AIO总结](https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/BIO-NIO-AIO.md)
 4. [Select,poll,epoll](https://devarea.com/linux-io-multiplexing-select-vs-poll-vs-epoll/#.X0N-5NMzZTa)
 5. [epoll](https://www.cnblogs.com/aspirant/p/9166944.html)
+6. [同步，异步，阻塞，非阻塞](https://www.jianshu.com/p/aed6067eeac9)
+2. [ServerSocket与Socket详解](https://blog.csdn.net/J080624/article/details/78468396)
+3. [IO多路复用技术是什么](https://www.zhihu.com/question/28594409)
 
