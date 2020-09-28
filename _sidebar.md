@@ -1,5 +1,4 @@
 
-* [备战面试](./docs/a-1备战面试.md)
 * Java
 
   * [Java基础](./docs/b-1面试题总结-Java基础.md)
@@ -29,6 +28,7 @@
   - [Zookeeper](./docs/g-2zookeeper.md)
 * netty
   - [netty](./docs/netty.md)
+* [并发面试](./docs/a-1并发面试.md)
 * 读过的技术类书籍
 
   - [读过的书](./docs/h-1books.md)
