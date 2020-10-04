@@ -139,7 +139,7 @@ while (iterator2.hasNext()) {
 
 #### HashTable和ConcurrentHashMap的区别
 - HashTable的put和get操作都用到了同步锁是一种悲观锁效率比较低。
-- ConcurrentHashMap用的是同步锁加CAS无锁操作，通过加transient关键字来实现。
+- ConcurrentHashMap用的是同步锁加CAS无锁操作，通过加volatile关键字来实现。
 - put操作。
 	- 如果没有初始化就先调用initTable（）方法来进行初始化过程
 	- 如果没有hash冲突就直接CAS插入

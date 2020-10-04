@@ -70,6 +70,8 @@ k 1.7使用segment存放数据，segment继承了ReentrantLock，是一种可重
 
 ### 线程之间共享哪些内容？
 
+一个进程中可以有多个线程，多个线程共享进程的**堆**和**方法区 (JDK1.8 之后的元空间)资源，但是每个线程有自己的\**程序计数器**、**虚拟机栈** 和 **本地方法栈**。
+
 堆和方法区。不共享jvm调用栈，本地调用栈和程序计数器。
 
 ### 如何访问这些共享内存？
@@ -95,6 +97,17 @@ Locks：基本的锁的实现，最重要的AQS框架和lockSupport
 Concurrent：构建的一些高级的工具，如线程池，并发队列等。
 
 ## 线程池
+
+### 常见的线程池
+
+- Executors.newCachedThreadPool()，corePoolSize = 0全部为普通线程。
+- Executors.newFixedThreadPool()全部为核心线程
+- Executors.newSingleThreadExecutors()只有一个核心线程
+
+都是通过new ThreadPoolExecutor()
+
+线程池中分为核心工厂，当核心工厂满了的时候，放入队列，队列满了加入普通工厂。
+
 ### 线程池，有哪几个参数，有哪几种，有哪些拒绝策略 （线程池所有参数讲一讲）
 帮我们管理线程，避免增加创建线程和销毁线程的资源损耗。提高响应速度。 重复利用。
 ### 线程池函数
