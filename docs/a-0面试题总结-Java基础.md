@@ -34,6 +34,10 @@ StringBuffer类是线程安全的，StringBuilder不是线程安全的；
 
 StringBuilder在方法内部完成“+”的操作，StringBuffer在全局变量。
 
+## 5.replace和replaceAll的区别
+
+replace是基于字符的替换，replaceAll是基于正则表达式的替换。
+
 ## OS
 
 ### 1.进程和线程的区别？
