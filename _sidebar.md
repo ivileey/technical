@@ -31,6 +31,8 @@
   - [netty](./docs/netty.md)
 * 设计模式
   - [设计模式](./docs/j-1设计模式.md)
+* 权限认证
+  - 
 * 面试专栏
 
   - [Java集合](./docs/a-2Java集合.md)
