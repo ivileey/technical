@@ -110,3 +110,22 @@ B+树的主要原因是：B树在提高了IO性能的同时并没有解决元素
 2. 查询条件字符串和数字之间的隐式转换
 3. 特殊修饰符
 4. 索引优化器选择最优的索引
+
+## 命令
+
+```
+SELECT @@autocommit; //查询事务提交状态
+set autocommit=0; //取消自动提交
+create database tran; //创建数据库
+use tran; //使用数据库
+create table student(id int primarykey,name varchar(10)) engine=innodb default charset=utf8; //创建表
+insert into student values(1,'zhangsan'); //使用表
+commit;//提交数据
+set session transaction isolation level read uncommitted;//将隔离级别设置成读未提交
+start transaction;//开启事务
+update student set name='msb';
+rollback;//回滚
+set session transaction isolation level read committed;//修改隔离级别为读取已提交
+set session transaction isolation level repeatable read;//
+```
+
