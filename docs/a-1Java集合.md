@@ -1,14 +1,31 @@
-#  Java集合
+Java集合
 
 ## 一、HashMap
 
+### 如何使HashMap变的线程安全
+
+- Java的`Collections`库中的`synchronizedMap()`方法//Collections.synchronizedMap(map),读和写都加上同步锁。
+- 使用ConcurrentHashMap
+
 ### 1.谈谈我理解的HashMap，讲讲其中get、put的过程
+
+HashMap 根据键的 hashCode 值存储数据，大多数情况下可以直接定位到它的值，因而具有很快
+
+的访问速度，但遍历顺序却是不确定的。 HashMap 最多只允许一条记录的键为 null，允许多条记
+
+录的值为 null。HashMap 非线程安全，即任一时刻可以有多个线程同时写 HashMap，可能会导
+
+致数据的不一致。如果需要满足线程安全，可以用 Collections 的 synchronizedMap 方法使
+
+HashMap 具有线程安全的能力，或者使用 ConcurrentHashMap。我们用下面这张图来介绍
+
+HashMap 的结构。
 
 > 两个重要的参数容量(Capacity)和负载因子(Load factor)
 >
 > 简单的说，Capacity就是buckets的数目，Load factor就是buckets填满程度的最大比例。如果对迭代性能要求很高的话不要把`capacity`设置过大，也不要把`load factor`设置过小。当bucket填充的数目（即hashmap中元素的个数）大于`capacity*load factor`时就需要调整buckets的数目为当前的2倍。
 
-- 是由数组加链表组成
+- 是由数组加链表组成，数组起始大小是16
 - put过程会根据key的hashcode做hash，如果没碰撞直接放到桶里，如果碰撞了则执行equals()函数判断key是否相等，如果相等进行覆盖，不相等则以链表的形式存放，如果长度大于TREEIFY_THRESHOLD(默认值是8）,就把链表转换成红黑树，桶满了要resize()超过了load factor * current capacity;
 - get如果桶中只有一个节点则命中，如果有冲突则通过key.equals去查找要查找的值。
 
@@ -19,17 +36,94 @@
 
 当entry的数量达到桶的数量的0.75时，哈希冲突已经比较严重，就会成倍扩容桶数组，并重新分配原来的Entry。
 
-### 4.HashMap和ConcurrentHashMap的区别？
-
-- HashMap是线程不安全的 ，ConcurrentHashMap是线程安全的
-
 ### 5.高并发HashMap的环是如何产生的？
 
 线程不安全的HashMap, HashMap在并发执行put操作时会引起死循环，是因为多线程会导致HashMap的Entry链表形成环形数据结构，查找时会陷入死循环。hashmap成环的原因的代码出现在transfer代码中，在扩容之后的数据迁移部分。
 
+### 6.遍历HashMap的几种方式？
+
+1. Iterator<Map.Entry> iterator = map.entrySet().iterator();
+2. Iterator<Integer> key = map.keySet().iterator();
+3. Map.Entry<> entry : map.entrySet()
+4. Integer key : map.keySet()
+5. map.forEach((k,v) -> {k;v;})
+6. map.entrySet().stream().forEach((entry) -> {entry.getKey()});
+
+### 7. 为什么iterator.remove()能安全的删除元素，当使用了迭代器的时候，map.remove()不能安全的删除元素？（快速失败机制）
+
+迭代器会先调用hasNext()方法判断光标值，cursor ==size。如果
+
+会抛出ConcurrentModificationException异常。当方法检测到对象的并发修改，就会抛出该异常。
+
+迭代器在调用 next()、remove() 方法时都是调用 checkForComodification() 方法，modCount记录集合的修改次数，每当集合被修改，如add、remove等方法，modCount + 1。该方法主要就是检测 modCount == expectedModCount ? 若不等则抛出 ConcurrentModificationException 异常。
+
+```
+ public boolean hasNext() {
+                return cursor != size;
+            }
+```
+
+```
+ public E next() {
+                checkForComodification();
+                int i = cursor;    //记录索引位置
+                if (i >= size)    //如果获取元素大于集合元素个数，则抛出异常
+                    throw new NoSuchElementException();
+                Object[] elementData =  ArrayList.this.elementData;
+                if (i >= elementData.length)
+                    throw new ConcurrentModificationException();
+                cursor = i + 1;      //cursor + 1
+                return (E) elementData[lastRet = i];  //lastRet + 1 且返回cursor处元素
+            }
+```
+
+```
+    final void checkForComodification() {
+                if (modCount != expectedModCount)
+                    throw new ConcurrentModificationException();
+            }
+```
+
+```
+    public void remove() {
+                if (lastRet < 0)
+                    throw new IllegalStateException();
+                checkForComodification();
+
+                try {
+                    ArrayList.this.remove(lastRet);
+                    cursor = lastRet;
+                    lastRet = -1;
+                    expectedModCount = modCount;
+                } catch (IndexOutOfBoundsException ex) {
+                    throw new ConcurrentModificationException();
+                }
+            }
+```
+
+### 7 安全失败机制
+
+采用安全失败机制的集合容器，在遍历时不是直接在集合内容上访问的，而是先复制原有集合内容，在拷贝的集合上进行遍历。所以，在遍历过程中对原集合所作的修改并不能被迭代器检测到，故不会抛 `ConcurrentModificationException` 异常。
+
+### 8.Array.asList();
+
+使用工具类Array.asList()把数组转换成集合时，不能使用其修改集合相关的方法，它的add/remove/clear方法会抛出UnspportedOperationException异常。
+
+1. 传递的数组必须是对象数组，而不是基本类型。
+
+   asList 方法的参数必须是对象或者对象数组，而原生数据类型不是对象——这也正是包装类出现的一个主要原因。当传入一个原生数据类型数组时，asList 的真正得到的参数就不是数组中的元素，而是**数组对象**本身！此时List 的唯一元素就是这个数组。
+
+2. 不可以修改，官方声明返回一个由指定数组生成的固定大小的List
+
+    asList 方法返回的确实是一个 ArrayList ,但这个 ArrayList 并不是 java.util.ArrayList ，而是 java.util.Arrays 的一个内部类。Arrays继承了AbstractList<E>，而在AbstractList中U对add方法天然就会抛出异常“throw new UnsupportedOperationException();”，平时我们使用的都是ArrayList的add方法，它是进行了重写；所以根本原因在于Arrays的内部类ArrayList没有重写add方法罢了；
+
+   
+
 ## 二、ConcurrentHashMap 
 
-1.7ConcurrentHashMap采用了分段锁的技术。使用segment数组存放数据。每个segment维护了若干个HashEntry的桶构成链表。1.8舍弃了segment，大量使用了synchronized，以及无锁操作CAS以保证ConcurrentHashMap的线程安全性。synchronized做了很多优化，包括偏向锁，轻量级锁，重量级锁。底层数据结构改为采用数组+链表+红黑树的结构。ConcurrentHashMap在进行put操作时根据 key 定位出的 Node，如果为空表示当前位置可以写入数据，利用 CAS 尝试写入，失败则自旋保证成功。都不满足的情况按链表或红黑树的方式插入则用synchronized进行put。
+1.7ConcurrentHashMap采用了分段锁的技术。使用segment数组存放数据。每个segment维护了若干个HashEntry的桶构成链表。
+
+1.8舍弃了segment，大量使用了synchronized，以及无锁操作CAS以保证ConcurrentHashMap的线程安全性。synchronized做了很多优化，包括偏向锁，轻量级锁，重量级锁。底层数据结构改为采用数组+链表+红黑树的结构。ConcurrentHashMap在进行put操作时根据 key 定位出的 Node，如果为空表示当前位置可以写入数据，利用 CAS 尝试写入，失败则自旋保证成功。都不满足的情况按链表或红黑树的方式插入则用synchronized进行put。
 
 ### 1.HashTable和ConcurrentHashMap的区别
 
@@ -43,6 +137,10 @@
   -  计算hash值，定位到该table索引位置，如果是首节点符合就返回
   -  如果遇到扩容的时候，会调用标志正在扩容节点ForwardingNode的find方		法，查找该节点，匹配就返回
   -  以上都不符合的话，就往下遍历节点，匹配就返回，否则最后就返回null
+
+### 分段锁的原理
+
+容器里有多把锁，每一把锁用于锁容器其中一部分数据，那么当多线程访问容器里不同数据段的数据时，线程间就不会存在锁竞争，从而可以有效的提高并发访问效率，这就是ConcurrentHashMap所使用的锁分段技术，首先将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问
 
 
 
