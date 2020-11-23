@@ -149,19 +149,12 @@ Spring充分利用了IoC容器Proxy代理对象以及对AOP拦截器的功能特
 
  Spring AOP就是基于动态代理的，如果要代理的对象，实现了某个接⼝，那么Spring AOP会使⽤JDK Proxy，去创建代理对象，⽽对于没有实现接⼝的对象，就⽆法使⽤ JDK Proxy 去进⾏代理了，这时候 Spring AOP会使⽤Cglib ，这时候Spring AOP会使⽤ Cglib ⽣成⼀个被代理对象的⼦类来作为代理。
 
-**需要掌握回答的内容：**
-
-- Proxy机制：ProxyFactoryBean和ProxyFactory
-- 代理对象的生成
-- AOP拦截器的实现
-- Cglib
-
 
 
 主要是两种，一种是JDK动态代理，一种是Cglib代理。
 
 两者的区别：
- 1.JDK动态代理只能代理实现了接口的类，动态代理类的字节码在程序运行时由Java反射机制动态生成。
+ 1.JDK动态代理只能代理实现了接口的类，通过newInstanse来创建，动态代理类的字节码在程序运行时由Java反射机制动态生成。
  2.Cglib是可以代理没有实现接口的类，cglib是针对类来实现代理的，他的原理是对指定的目标类生成一个子类，并覆盖其中方法实现增强，所以不能对final修饰的类进行代理。底层采用ASM实现。
 
 
