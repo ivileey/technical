@@ -14,7 +14,7 @@
 6. registerBeanPostProcessors(beanFactory);注册BeanPostProcessor的实现类。（此接口的两个方法：postProcessBeforeInitialization和postProcessAfterInitialization。两个方法分别在Bean初始化之前和初始化之后得到执行)。
 7. initMessageSource();初始化当前ApplicationContext的MessageSource。国际化。
 8. initApplicationEventMulticaster();初始化当前ApplicationContext的事件广播器。
-9. onRefresh()；钩子方法，具体的子嘞可以在这里初始化一些特殊的Bean
+9. onRefresh()；钩子方法，具体的子类可以在这里初始化一些特殊的Bean
 10. registerListeners();注册事件监听器，监听器需要实现ApplicationListener接口。
 11. **finishBeanFactoryInitialization(beanFactory)**；初始化所有的singleton beans
 12. finishRefresh();ApplicationContext初始化完成
@@ -141,6 +141,12 @@ Spring IoC容器允许BeanFactoryPostProcessor在容器实例化任何bean之前
 
 
 
+#### SpringIOC中BeanDefinition中包含哪些信息
+
+class名，id，别名信息，properties属性，是否是懒加载
+
+别名信息就是在map中映射到实际的bean。
+
 ## 二、Spring AOP
 
  AOP(Aspect-Oriented Programming:⾯向切⾯编程)能够将那些与业务⽆关，却为业务模块所共同调⽤ 的逻辑或责任（例如事务处理、⽇志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。
@@ -189,3 +195,22 @@ Spring充分利用了IoC容器Proxy代理对象以及对AOP拦截器的功能特
 - Spring Cloud Security
 - Spring Cloud Zookeeper
 
+## Springboot常用注解
+
+@SpringBootApplication:@Configuration,@EnableAutoConfiguration,@ComponentScan
+
+@Transactional
+
+@Service
+
+@Controller
+
+@ControllerAdvice
+
+@Autowired
+
+@GetMapping
+
+@RequestMapping
+
+AOP:@Aspect@Component

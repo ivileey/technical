@@ -51,7 +51,7 @@ HashMap 的结构。
 
 ### 7. 为什么iterator.remove()能安全的删除元素，当使用了迭代器的时候，map.remove()不能安全的删除元素？（快速失败机制）
 
-迭代器会先调用hasNext()方法判断光标值，cursor ==size。如果
+迭代器会先调用hasNext()方法判断光标值，cursor == size。如果
 
 会抛出ConcurrentModificationException异常。当方法检测到对象的并发修改，就会抛出该异常。
 
